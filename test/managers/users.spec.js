@@ -1,7 +1,7 @@
 require('mocha')
 const sinon = require('sinon')
-// const { expect } = require('chai')
-const { userList, getList, getOne } = require('../../src/managers/users')
+const { expect } = require('chai')
+const { userList, getList, getOne, getValue } = require('../../src/managers/users')
 
 describe('User Manager', () => {
   let users
@@ -126,5 +126,16 @@ describe('User Manager', () => {
     getOne(reqMock, resMock, nextMock)
     sinon.assert.calledWith(statusMock, 404)
     sinon.assert.called(sendMock)
+  })
+
+  it('will get the value', () => {
+    userList.push({
+      name: 'Pablo'
+    })
+    const response = getValue(0)
+    
+    expect(response).to.be.deep.equal({
+      name: 'Pablo'
+    })
   })
 })
